@@ -154,8 +154,8 @@ L’application suit l’architecture **MVC** :
 
 1. **Cloner le dépôt** :
    ```bash
-   git clone https://github.com/votre-utilisateur/gestion-bancaire.git
-   cd gestion-bancaire
+   git clone https://github.com/Fatima93190/Application_Web_de_Gestion_Bancaire.git
+   cd Application_Web_de_Gestion_Bancaire
    ```
 2. **Configurer la base de données**.
 3. **Lancer l'application** .
