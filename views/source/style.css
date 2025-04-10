@@ -1,0 +1,177 @@
+/* Style de base de la page */
+body {
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Titre principal */
+.page-title {
+    color: #4A4E69;
+    font-weight: bold;
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+/* Style des tableaux */
+table {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    text-align: center;
+    padding: 1rem;
+}
+
+.table-header {
+    background-color:rgb(216, 11, 199);
+    color: #333;
+}
+
+.table-hover tr:hover {
+    background-color: rgba(221, 196, 218, 0.4);
+}
+
+/* Style des boutons d'action */
+.action-buttons .btn {
+    border-radius: 5px;
+    font-weight: bold;
+    margin-right: 0.5rem;
+}
+
+.action-buttons .btn-primary {
+    background-color: rgb(0, 196, 251);
+    border-color: #007bff;
+}
+
+.action-buttons .btn-warning {
+    background-color: rgb(110, 224, 2);
+    border-color: rgb(113, 189, 0);
+}
+
+.action-buttons .btn-danger {
+    background-color: rgb(255, 0, 25);
+    border-color: rgb(111, 0, 11);
+}
+
+.action-buttons .btn:hover {
+    opacity: 0.8;
+}
+
+/* Sidebar (barre latérale) */
+.sidebar {
+    width: 250px;
+    background: rgb(25, 3, 112);
+    background: linear-gradient(0deg, rgba(25, 3, 112, 1) 0%, rgba(192, 10, 189, 0.9729344729344729) 100%, rgba(139, 11, 137, 0.9729344729344729) 100%);
+    padding: 2rem 1rem;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    overflow-y: auto;
+}
+
+.sidebar h1 a {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Liens de navigation dans la sidebar */
+.nav-link {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+    background-color: rgba(251, 203, 245, 0.2);
+    outline: none;
+    color: whitesmoke;
+    text-decoration: underline;
+}
+
+.nav-link:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+/* Contenu principal */
+.main-content {
+    margin-left: 250px;
+    padding: 2rem;
+    width: calc(100% - 250px);
+    background-color: #f8f9fa;
+}
+
+/* Style des titres dans le contenu principal */
+h2 {
+    color: #4A4E69;
+    font-weight: bold;
+}
+
+.container_cartes {
+    display: flex;
+    justify-content: center;
+    padding:10%;
+    gap: 20px; /* Espace entre les cartes */
+    /* margin: 20px auto; */
+    max-width: 1200px; /* Ajustez selon vos besoins */
+    flex-wrap: wrap; /* Permet le retour à la ligne sur petits écrans */
+}
+
+.carte {
+    background-color:rgb(243, 194, 235);
+    border-radius: 8px;
+    justify-content: center;
+    align-items:center;
+    padding:20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 30px;
+    text-align: center;
+    width: 20vw;
+    min-height: 30vh;
+    /* min-width: 250px; Largeur minimale des cartes */
+    /* flex: 1; Les cartes s'adaptent et occupent l'espace disponible */
+    /* max-width: 300px; Largeur maximale des cartes */
+}
+
+.carte h2 {
+    margin: 10%;
+    font-size: 1.2rem;
+    color: #333;
+}
+.carte p {
+    margin: 20%;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight:bold;
+}
+
+/* Alertes */
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.btn-primary{
+    background: linear-gradient(0deg, rgba(25, 3, 112, 1) 0%, rgba(192, 10, 189, 0.9729344729344729) 100%, rgba(139, 11, 137, 0.9729344729344729) 100%);
+}

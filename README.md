@@ -25,7 +25,7 @@ Cette application web permet à un **administrateur unique** de gérer toutes ce
 ##  Fonctionnalités
 
 ###  Authentification
-- Page de connexion (email + mot de passe)
+- Page de connexion (nom + mot de passe)
 - Vérification des identifiants (hashés avec Bcrypt)
 - Création d’une session sécurisée
 - Déconnexion
@@ -85,6 +85,10 @@ L’application suit l’architecture **MVC** :
 |  |- /templates
 |  |  |- footer.php
 |  |  |- header.php
+|  |- /source
+|  |  |- client.js
+|  |  |- login.js
+|  |  |- style.css
 |  |-/client
 |  |  |- client_create.php
 |  |  |- client_edit.php
