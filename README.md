@@ -87,6 +87,8 @@ L’application suit l’architecture **MVC** :
 |  |  |- header.php
 |  |- /source
 |  |  |- client.js
+|  |  |- compte.js
+|  |  |- contrat.js
 |  |  |- login.js
 |  |  |- style.css
 |  |-/client

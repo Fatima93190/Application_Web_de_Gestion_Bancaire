@@ -25,23 +25,48 @@
     </div>
 
     <div class="main-content">
-        
-<form action="?action=doLogin" method="POST" id="form">
-    <div class="form-group">
-        <label>Email d'administrateur :</label>
-        <input class="form-control" type="text" name="admin_email" id="mail" required>
-    </div>
-    <div id="err_mail"></div><br>
-    <div class="form-group">
-        <label>Mot de passe :</label>
-        <input class="form-control" type="password" name="admin_password" id="pass" required>
-    </div>
-    <div id="err_pass"></div><br>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">Se connecter</button>
-    </div>
-</form>
+        <!-- Affichage des erreurs si elles existent -->
+        <?php if (isset($_GET['error'])): ?>
+            <div class="alert alert-danger">
+                <?php
+                switch ($_GET['error']) {
+                    case 'missing_fields':
+                        echo "Tous les champs sont requis.";
+                        break;
+                    case 'invalid_credentials':
+                        echo "Identifiants invalides. Veuillez vérifier votre email et mot de passe.";
+                        break;
+                    case 'need_login':
+                        echo "Vous devez être connecté pour accéder à cette page.";
+                        break;
+                    default:
+                        echo "Erreur inconnue.";
+                        break;
+                }
+                ?>
+            </div>
+        <?php endif; ?>
 
-<script src="/Application_Web_de_Gestion_Bancaire/views/source/login.js"></script>
+        <!-- Formulaire de connexion -->
+        <form action="?action=doLogin" method="POST" id="form">
+            <div class="form-group">
+                <label>Email d'administrateur :</label>
+                <input class="form-control" type="text" name="admin_email" id="mail">
+            </div>
+            <div id="err_mail"></div><br>
+            <div class="form-group">
+                <label>Mot de passe :</label>
+                <input class="form-control" type="password" name="admin_password" id="pass">
+            </div>
+            <div id="err_pass"></div><br>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">Se connecter</button>
+            </div>
+        </form>
 
-<?php require_once __DIR__ . '/../templates/footer.php';
+        <script src="/Application_Web_de_Gestion_Bancaire/views/source/login.js"></script>
+    </div>
+
+    <script src="/Application_Web_de_Gestion_Bancaire/views/source/login.js"></script>
+
+<?php require_once __DIR__ . '/../templates/footer.php'; 

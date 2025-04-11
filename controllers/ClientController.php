@@ -14,26 +14,34 @@ class ClientController{
         $this->contratRepository = new ContratRepository();
     }
 
-    public function client_list(){
+    public function client_list() {
         if (isConnected()) {
-        $clients = $this->clientRepository->getClients();
-        require_once __DIR__ .'/../views/client/client_list.php';
-        }else {
-             // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            $clients = $this->clientRepository->getClients();
+    
+            // Pour chaque client, on vérifie s’il a des comptes ou des contrats
+            foreach ($clients as $client) {
+                $client->hasComptes = $this->compteRepository->clientHasCompte($client->getClient_id());
+                $client->hasContrats = $this->contratRepository->clientHasContrat($client->getClient_id());
+            }
+    
+            require_once __DIR__ .'/../views/client/client_list.php';
+        } else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
+    
 
     public function client_view(int $client_id){
         if (isConnected()) {
             $client = $this->clientRepository->getClient($client_id);
-            // Exemple : deux méthodes dans ton modèle pour compter les types
             $comptesParType = $this->compteRepository->countComptesByType($client_id);
             $contratsParType = $this->contratRepository->countContratsByType($client_id);
             require_once __DIR__ .'/../views/client/client_view.php';
         }else{
             // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
 
     }
@@ -42,23 +50,28 @@ class ClientController{
         if (isConnected()) {
             require_once __DIR__ .'/../views/client/client_create.php';
         }else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
 
     public function client_store(){
-        $client = new Client;
-        $client->setNom($_POST['nom']);
-        $client->setPrenom($_POST['prenom']);
-        $client->setEmail($_POST['email']);
-        $client->setTelephone($_POST['telephone']);
-        $client->setAdresse($_POST['adresse']);
-        $this->clientRepository->create($client);
+        if (isConnected()) {
+            $client = new Client;
+            $client->setNom($_POST['nom']);
+            $client->setPrenom($_POST['prenom']);
+            $client->setEmail($_POST['email']);
+            $client->setTelephone($_POST['telephone']);
+            $client->setAdresse($_POST['adresse']);
+            $this->clientRepository->create($client);
 
 
-        header('Location: ?');
-        exit;
+            header('Location: ?action=client_list');
+            exit;
+        }else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
 
     }
 
@@ -68,12 +81,13 @@ class ClientController{
             require_once __DIR__ .'/../views/client/client_edit.php';
         }
         else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
 
     public function client_update(){
+        if (isConnected()) {
             $client = new Client;
             $client->setClient_id($_POST['client_id']);
             $client->setNom($_POST['nom']);
@@ -85,27 +99,22 @@ class ClientController{
 
             header('Location: ?action=client_list');
             exit;
+        }
+        else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
     }
 
     public function client_delete(int $client_id){
         if (isConnected()) {
             $result = $this->clientRepository->delete($client_id);
-            if ($result) {
-                header('Location: ?action=client_list&success=1');
-                exit;
-            } else {
-                header('Location: ?action=client_list&error=1');
-                exit;
-            }
+            header('Location: ?action=client_list');
             exit;
-        } else {
-            require_once __DIR__ . '/../views/admin/login.php';
+        }
+        else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
-
-    // public function forbidden(){
-
-    //         require_once __DIR__ .'/../views/404.php';
-    //         http_response_code(404);
-    // }
 }

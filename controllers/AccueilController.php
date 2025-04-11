@@ -19,9 +19,6 @@ class AccueilController{
     public function home()
     {
         if (isConnected()) {
-            // $clients = $this->clientRepository->getClients();
-            // $comptes = $this->compteRepository->getComptes();
-            // $contrats = $this->contratRepository->getContarts();
             $clientRepository = new ClientRepository();
             $nbrTotalClients = $clientRepository->count_client();
             $compteRepository = new CompteRepository();
@@ -33,7 +30,7 @@ class AccueilController{
             require_once __DIR__ . '/../views/home.php';
         }else {
             // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
         }
     } 
     

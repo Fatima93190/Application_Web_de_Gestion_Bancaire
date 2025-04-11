@@ -25,7 +25,7 @@
             <td><?= htmlspecialchars($contrat->getClient()->getNom()
 ) ?> <?= htmlspecialchars($contrat->getClient()->getPrenom()) ?></td>
             <td class="action-buttons">
-                <a href="?action=contrat_view&contrat_id=<?= $contrat->getContrat_id() ?>" class="btn btn-primary btn-sm">Voir</a>
+                <a href="?action=contrat_view&contrat_id=<?= $contrat->getContrat_id() ?>" class="btn btn-primary btn-sm">Voir dossier</a>
                 <a href="?action=contrat_edit&contrat_id=<?= $contrat->getContrat_id() ?>" class="btn btn-warning btn-sm">Modifier</a>
                 <a onclick="return confirm('T’es sûr de vouloir supprimer le contrat?');" href="?action=contrat_delete&contrat_id=<?= $contrat->getContrat_id() ?>" class="btn btn-danger btn-sm">Supprimer</a>
             </td>

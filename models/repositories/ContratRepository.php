@@ -57,6 +57,13 @@ class ContratRepository{
         return $contrats;
     }
 
+    public function clientHasContrat(int $contrat_id): bool{
+        $statement= $this->connection->getConnection()->prepare('SELECT * FROM contrats WHERE client_id =:contrat_id LIMIT 1');
+        $statement->execute(['contrat_id'=>$contrat_id]);
+
+        return (bool) $statement->fetch();
+    }
+
     public function getContrat(int $contrat_id): ?Contrat{
         $statement = $this->connection->getConnection()->prepare('SELECT * FROM contrats WHERE contrat_id =:contrat_id');
         $statement->execute(['contrat_id'=>$contrat_id]);

@@ -9,7 +9,7 @@ foreach ($clients as $c) {
 
 <h2 class="mb-4">Modifier les informations</h2>
 
-<form action="?action=compte_update" method="POST">
+<form action="?action=compte_update" method="POST" id="formCompteEdit">
     <input type="hidden" name="compte_id" value="<?= $compte->getCompte_id() ?>">
     <div class="mb-3">
         <label class="form-label">Client :</label>
@@ -19,7 +19,8 @@ foreach ($clients as $c) {
     <div class="mb-3">
         <label for="RIB" class="form-label">RIB :</label>
         <input type="text" class="form-control" id="RIB" name="RIB" value="<?= htmlspecialchars($compte->getRib()) ?>" readonly>
-        </div>
+    </div>
+
     <div class="mb-3">
         <label for="Type_compte" class="form-label">Type de compte :</label>
         <select class="form-control" name="Type_compte" id="Type_compte">
@@ -29,13 +30,26 @@ foreach ($clients as $c) {
     </div>
     <div class="mb-3">
         <label for="Solde_initial" class="form-label">Solde :</label>
-        <input type="text" class="form-control" id="Solde_initial" name="Solde_initial" value="<?= htmlspecialchars($compte->getSolde_initial()) ?>" required>
+        <input type="number" class="form-control" id="Solde_initial" name="Solde_initial" value="<?= htmlspecialchars($compte->getSolde_initial()) ?>">
     </div>
+    <div id="err_solde" style="color: red;"></div><br>
     
     <button type="submit" class="btn btn-primary">Modifier</button>
 </form>
 
 
 <a href="?action=compte_list" class="btn btn-secondary">Retour à la liste</a>
+
+<script src="/Application_Web_de_Gestion_Bancaire/views/source/compte.js"></script>
+
+<script>
+    document.getElementById('formCompteEdit').addEventListener('submit', function(e) {
+        if (!validateForm('formCompteEdit')) {
+            e.preventDefault(); // Bloque la soumission si validation échoue
+            return false;
+        }
+        return true; // Autorise la soumission si tout est valide
+    });
+</script>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; 

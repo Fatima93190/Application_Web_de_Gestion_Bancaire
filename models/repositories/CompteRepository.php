@@ -58,6 +58,13 @@ class CompteRepository{
         return $comptes;
     }
 
+    public function clientHasCompte(int $compte_id): bool{
+        $statement= $this->connection->getConnection()->prepare('SELECT * FROM compte_bancaire WHERE client_id=:compte_id LIMIT 1');
+        $statement->execute(['compte_id'=>$compte_id]);
+
+        return (bool) $statement->fetch();
+    }
+
     public function getCompte(int $compte_id): ?Compte{
         $statement = $this->connection->getConnection()->prepare('SELECT * FROM compte_bancaire WHERE compte_id =:compte_id');
         $statement->execute(['compte_id'=>$compte_id]);

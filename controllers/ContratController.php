@@ -21,7 +21,8 @@ class ContratController{
         }
         else {
             // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;
         }
     }
 
@@ -33,8 +34,8 @@ class ContratController{
         require_once __DIR__ .'/../views/contrat/contrat_view.php';
         }
         else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;
         }
     }
 
@@ -44,56 +45,66 @@ class ContratController{
         require_once __DIR__ .'/../views/contrat/contrat_create.php';
     }
         else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;
         }
     }
 
     public function contrat_store(){
-        $contrat = new Contrat;
-        $contrat->setType_contrat($_POST['type_contrat']);
-        $contrat->setMontant((float) $_POST['montant']);
-        $contrat->setDuree((int) $_POST['duree']);
-        $contrat->setClient_id((int) $_POST['client_id']);
-        $this->contratRepository->create($contrat);
+        if (isConnected()) {
+            $contrat = new Contrat;
+            $contrat->setType_contrat($_POST['type_contrat']);
+            $contrat->setMontant((float) $_POST['montant']);
+            $contrat->setDuree((int) $_POST['duree']);
+            $contrat->setClient_id((int) $_POST['client_id']);
+            $this->contratRepository->create($contrat);
 
-        header('Location: ?');
+            header('Location: ?action=contrat_list');
+        }else {
+            header('Location: ?action=login&error=need_login');
+            exit;
+        }
 
     }
 
     public function contrat_edit(int $contrat_id){
         if (isConnected()) {
-        $contrat = $this->contratRepository->getContrat($contrat_id);
-        $clients= $this->clientRepository->getClients();
-        require_once __DIR__ .'/../views/contrat/contrat_edit.php';
+            $contrat = $this->contratRepository->getContrat($contrat_id);
+            $clients= $this->clientRepository->getClients();
+            require_once __DIR__ .'/../views/contrat/contrat_edit.php';
         }
         else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;
         }
     }
 
     public function contrat_update(){
-        $contrat = new Contrat;
-        $contrat->setContrat_id($_POST['contrat_id']);
-        $contrat->setType_contrat($_POST['type_contrat']);
-        $contrat->setMontant((float) $_POST['montant']);
-        $contrat->setDuree((int) $_POST['duree']);
-        $contrat->setClient_id((int) $_POST['client_id']);
-        $this->contratRepository->update($contrat);
+        if (isConnected()) {
+            $contrat = new Contrat;
+            $contrat->setContrat_id($_POST['contrat_id']);
+            $contrat->setType_contrat($_POST['type_contrat']);
+            $contrat->setMontant((float) $_POST['montant']);
+            $contrat->setDuree((int) $_POST['duree']);
+            $contrat->setClient_id((int) $_POST['client_id']);
+            $this->contratRepository->update($contrat);
 
-        header('Location: ?action=contrat_list');
-        exit;
+            header('Location: ?action=contrat_list');
+            exit;
+        }else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
     }
 
     public function contrat_delete(int $contrat_id){
-        $this->contratRepository->delete($contrat_id);
-        header('Location: ?');
-        exit;
+        if (isConnected()) {
+            $this->contratRepository->delete($contrat_id);
+            header('Location: ?action=contrat_list');
+            exit;
+        }else {
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
     }
-
-    // public function forbidden(){
-    //     require_once __DIR__ .'/../views/404.php';
-    //     http_response_code(404);
-    // }
 }

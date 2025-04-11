@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ .'/../models/repositories/CompteRepository.php';
-// require_once __DIR__ .'/../models/repositories/ClientRepository.php';
 require_once __DIR__ .'/../models/Compte.php';
 
 class CompteController{
@@ -21,7 +20,8 @@ class CompteController{
             require_once __DIR__ .'/../views/compte/compte_list.php';
         }
         else {
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
 
@@ -33,7 +33,8 @@ class CompteController{
             require_once __DIR__ .'/../views/compte/compte_view.php';
     }
         else {
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
 
     }
@@ -44,20 +45,33 @@ class CompteController{
             require_once __DIR__ .'/../views/compte/compte_create.php';
         }
         else {
-            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
 
     public function compte_store(){
-        $compte = new Compte;
-        $compte->setRib($_POST['RIB']);
-        $compte->setType_compte($_POST['Type_compte']);
-        $compte->setSolde_initial((float) $_POST['Solde_initial']);
-        $compte->setClient_id((int) $_POST['client_id']);
-        $this->compteRepository->create($compte);
-
-        header('Location: ?');
+        if (isConnected()) {
+            try {
+                $compte = new Compte;
+                $compte->setRib($_POST['RIB']);
+                $compte->setType_compte($_POST['Type_compte']);
+                $compte->setSolde_initial((float) $_POST['Solde_initial']);
+                $compte->setClient_id((int) $_POST['client_id']);
+                $this->compteRepository->create($compte);
+                header('Location: ?action=compte_list');
+                exit;
+            } catch (InvalidArgumentException $e) {
+                $_SESSION['error'] = $e->getMessage();
+                header('Location: ?action=compte_create');
+                exit;
+            }
+        }
+        else {
+            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
 
     }
 
@@ -68,26 +82,45 @@ class CompteController{
             require_once __DIR__ .'/../views/compte/compte_edit.php';
         }
         else {
-            require_once __DIR__ . '/../views/admin/login.php';
+            header('Location: ?action=login&error=need_login');
+            exit;        
         }
     }
 
     public function compte_update(){
-        $compte = new Compte;
-        $compte->setCompte_id($_POST['compte_id']);
-        $compte->setRib($_POST['RIB']);
-        $compte->setType_compte($_POST['Type_compte']);
-        $compte->setSolde_initial((float) $_POST['Solde_initial']);
-        $compte->setClient_id((int) $_POST['client_id']);
-        $this->compteRepository->update($compte);
-
-        header('Location: ?action=compte_list');
-        exit;
+        if (isConnected()) {
+            try {
+                $compte = new Compte;
+                $compte->setRib($_POST['RIB']);
+                $compte->setType_compte($_POST['Type_compte']);
+                $compte->setSolde_initial((float) $_POST['Solde_initial']);
+                $compte->setClient_id((int) $_POST['client_id']);
+                $this->compteRepository->create($compte);
+                header('Location: ?action=compte_list');
+                exit;
+            } catch (InvalidArgumentException $e) {
+                $_SESSION['error'] = $e->getMessage();
+                header('Location: ?action=compte_create');
+                exit;
+            }
+        }
+        else {
+            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
     }
 
     public function compte_delete(int $compte_id){
-        $this->compteRepository->delete($compte_id);
-        header('Location: ?');
-        exit;
+        if (isConnected()) {
+            $this->compteRepository->delete($compte_id);
+            header('Location: ?action=compte_list');
+            exit;
+        }
+        else {
+            // Redirige vers la vue de login si l'utilisateur n'est pas connecté
+            header('Location: ?action=login&error=need_login');
+            exit;        
+        }
     }
 }

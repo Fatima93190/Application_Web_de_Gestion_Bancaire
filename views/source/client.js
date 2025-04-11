@@ -57,3 +57,14 @@ function validateForm(formId) {
 
     return isValid;
 }
+
+function confirmDelete(hasComptes, hasContrats) {
+    const basicConfirm = confirm("Tu es sûr de vouloir supprimer ce client ?");
+    if (!basicConfirm) return false;
+
+    if (hasComptes || hasContrats) {
+        return confirm("Ce client a des comptes ou des contrats associés.\nLa suppression entraînera aussi la suppression de tout ça.\nTu es absolument sûr ?");
+    }
+
+    return true;
+}

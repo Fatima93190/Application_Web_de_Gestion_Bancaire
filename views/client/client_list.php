@@ -35,14 +35,15 @@
             <td><?= htmlspecialchars($client->getEmail()); ?></td>
             <td><?= htmlspecialchars($client->getTelephone()); ?></td>
             <td class="action-buttons">
-                <a href="?action=client_view&client_id=<?= $client->getClient_id() ?>" class="btn btn-primary btn-sm">Voir</a>
+                <a href="?action=client_view&client_id=<?= $client->getClient_id() ?>" class="btn btn-primary btn-sm">Voir dossier</a>
                 <a href="?action=client_edit&client_id=<?= $client->getClient_id() ?>" class="btn btn-warning btn-sm">Modifier</a>
-                <a onclick="return confirm('Tu es sûr de vouloir supprimer ce client ?');" href="?action=client_delete&client_id=<?= $client->getClient_id() ?>" class="btn btn-danger btn-sm">Supprimer</a>
+                <a href="?action=client_delete&client_id=<?= $client->getClient_id() ?>" class="btn btn-danger btn-sm" onclick="return confirmDelete(<?= $client->hasComptes ? 'true' : 'false' ?>, <?=$client->hasContrats ? 'true' : 'false' ?>);"> Supprimer </a>
             </td>
         </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
 <hr>
+<script src="/Application_Web_de_Gestion_Bancaire/views/source/client.js"></script>
 
 <?php require_once __DIR__ . '/../templates/footer.php'; ?>

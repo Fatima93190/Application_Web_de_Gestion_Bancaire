@@ -27,7 +27,7 @@
 ) ?> <?= htmlspecialchars($compte->getClient()->getPrenom()) ?></td>
 
             <td class="action-buttons">
-                <a href="?action=compte_view&compte_id=<?= $compte->getCompte_id() ?>" class="btn btn-primary btn-sm">Voir</a>
+                <a href="?action=compte_view&compte_id=<?= $compte->getCompte_id() ?>" class="btn btn-primary btn-sm">Voir dossier</a>
                 <a href="?action=compte_edit&compte_id=<?= $compte->getCompte_id() ?>" class="btn btn-warning btn-sm">Modifier</a>
                 <a onclick="return confirm('T’es sûr de vouloir supprimer ce compte ?');" href="?action=compte_delete&compte_id=<?= $compte->getCompte_id() ?>" class="btn btn-danger btn-sm">Supprimer</a>
             </td>

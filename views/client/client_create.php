@@ -36,7 +36,9 @@
 </form>
 
 <a href="?action=client_list" class="btn btn-secondary">Retour à la liste</a>
+
 <script src="/Application_Web_de_Gestion_Bancaire/views/source/client.js"></script>
+
 <script>
     document.getElementById('formulaire').addEventListener('submit', function(e) {
         if (!validateForm('formulaire')) {

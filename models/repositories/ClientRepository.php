@@ -79,23 +79,10 @@ class ClientRepository{
     }
 
     public function delete(int $client_id): bool{
-        $statement = $this->connection->getConnection()->prepare('SELECT COUNT(*) FROM compte_bancaire WHERE client_id=:client_id');
-        $statement->execute([':client_id'=>$client_id]);
-        $count_cmpt = $statement->fetchColumn();
+        $statement = $this->connection->getConnection()->prepare('DELETE FROM clients WHERE client_id=:client_id');
+        $statement->bindParam(':client_id', $client_id);
+        return $statement->execute();
 
-        $statement = $this->connection->getConnection()->prepare('SELECT COUNT(*) FROM contrats WHERE client_id=:client_id');
-        $statement->execute([':client_id'=> $client_id]);
-        $count_contrat = $statement->fetchColumn();
-
-        if ($count_cmpt == 0 && $count_contrat == 0) {
-            $statement = $this->connection->getConnection()->prepare('DELETE FROM clients WHERE client_id=:client_id');
-            $statement->bindParam(':client_id', $client_id);
-            $statement->execute();
-
-            return true;
-        }else{
-            return false;
-        }
     }
      public function count_client(){
 
